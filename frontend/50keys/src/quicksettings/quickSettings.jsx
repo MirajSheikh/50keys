@@ -5,6 +5,11 @@ import { AnimatePresence, motion } from "framer-motion"
 const QuickSettings = () => {
 
   const [currMode, setCurrMode] = useState("selectTimes")
+  const [timeSetting, setTimeSetting] = useState(0)
+  const [wordSetting, setWordSetting] = useState(0)
+
+  const timeOptions = [15, 30, 60, 90, 120, "custom"]
+  const wordOptions = [20, 50, 100, 150, "custom"]
 
   useEffect(() => {
 
@@ -57,12 +62,11 @@ const QuickSettings = () => {
             transition={{duration: 0.3}}>
 
           <div key={1} id="selectTimes" className={styles.selections}>
-            <h3>15</h3>
-            <h3>30</h3>
-            <h3>60</h3>
-            <h3>90</h3>
-            <h3>120</h3>
-            <h3>custom</h3>
+              {timeOptions.map((t, i) => (
+                <h3 key={i} 
+                    style={{color: `${i === timeSetting ? "hsl(45, 100%, 50%)" : "hsl(0, 0%, 50%)"}`}}
+                    onClick={() => setTimeSetting(i)}>{t}</h3>
+              ))}
           </div>
 
           </motion.div>
@@ -76,11 +80,11 @@ const QuickSettings = () => {
             transition={{duration: 0.3}}>
 
           <div key={2} id="selectWords" className={styles.selections}>
-            <h3>20</h3>
-            <h3>50</h3>
-            <h3>100</h3>
-            <h3>150</h3>
-            <h3>custom</h3>
+              {wordOptions.map((w, i) => (
+                <h3 key={i} 
+                    style={{color: `${i === wordSetting ? "hsl(45, 100%, 50%)" : "hsl(0, 0%, 50%)"}`}}
+                    onClick={() => setWordSetting(i)}>{w}</h3>
+              ))}
           </div>
 
           </motion.div>

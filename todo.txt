@@ -1,0 +1,12 @@
+Date -> 26-08-2025
+
+PRIMARY FEATURES
+1. implement typing functionality
+2. implement speed calculation logic
+3. add pausing, resuming and resetting the test feature
+4. full mobile friendly UX
+
+OPTIONAL FEATURES
+1. switchable themes
+2. more languages
+3. various difficulty settings
