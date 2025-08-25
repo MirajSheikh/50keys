@@ -1,0 +1,48 @@
+.quickSettings{
+  position: absolute;
+  inset: 0 0 30vw 0;
+  margin: auto;
+
+  height: min-content;
+  width: min-content;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.modeSelector{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modeSelector h2{
+  font: 500 1.25rem "Google Sans Code", sans-serif;
+  color: hsl(0, 0%, 50%);
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 15px 20px;
+
+  cursor: pointer;
+}
+
+.selections{
+  
+}
+
+.timeSelections, .wordSelections{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+.timeSelections h3, .wordSelections h3{
+  font: 500 1rem "Google Sans Code", sans-serif;
+  color: hsl(0, 0%, 50%);
+
+  cursor: pointer;
+}
+

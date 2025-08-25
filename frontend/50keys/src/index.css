@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800');
+
+body {
+  margin: 0;
+
+  background-color: hsl(0, 0%, 20%);
+}
+
+h1, h2, h3, h4, h5, h6{
+  margin: 0;
+}

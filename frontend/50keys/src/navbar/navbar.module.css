@@ -1,0 +1,22 @@
+.navbar{
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 10px;
+}
+
+.navbar h2{
+  font: 500 1.25rem "Google Sans Code", sans-serif;
+  color: hsl(45, 100%, 50%);
+
+  cursor: pointer;
+}
+
+.navRight{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}

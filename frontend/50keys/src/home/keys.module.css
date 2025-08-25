@@ -1,0 +1,27 @@
+.keyShape{
+  height: 50px;
+
+  border: 2px solid hsl(45, 100%, 20%);
+  border-radius: 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  color: hsl(45, 100%, 20%);
+
+  cursor: pointer;
+
+  transition: border 0.1s ease, color 0.1s ease;
+}
+
+.keyShape:hover{
+  border: 2px solid hsl(45, 100%, 40%);
+  color: hsl(45, 100%, 40%);
+}
+
+.keyShape p{
+  font: 500 1.5rem "Roboto", sans-serif;
+}
+
