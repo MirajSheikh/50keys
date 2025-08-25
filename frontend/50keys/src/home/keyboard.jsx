@@ -1,14 +1,22 @@
 import Keys from "./keys"
 import styles from "./keyboard.module.css"
+import { useState } from "react"
+import { motion } from "framer-motion"
 
 const Keyboard = () => {
 
+  const [keyboardSize, setKeyboardSize] = useState("1")
+
   return(
 
-    <div className={styles.keyboard}>
+    <motion.div 
+    initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.3}}>
+
+    <div id="keyboard" className={styles.keyboard} style={{transform: `scale(${keyboardSize})`}}>
 
       <div className={styles.numRow}>
 
+        <Keys idValue={"`"} keyValue={"`"} type={"tilda"}/>
         <Keys idValue={"1"} keyValue={"1"}/>
         <Keys idValue={"2"} keyValue={"2"}/>
         <Keys idValue={"3"} keyValue={"3"}/>
@@ -26,6 +34,7 @@ const Keyboard = () => {
       </div>
 
       <div className={styles.firstRow}>
+        <Keys idValue={"Tab"} keyValue={"tab"} type={"tab"} smallFont={true} />
         <Keys idValue={"q"} keyValue={"Q"} />
         <Keys idValue={"w"} keyValue={"W"} />
         <Keys idValue={"e"} keyValue={"E"} />
@@ -43,6 +52,7 @@ const Keyboard = () => {
 
       <div className={styles.secondRow}>
 
+        <Keys idValue={"CapsLock"} keyValue={"caps lock"} type={"caps"}  smallFont={true}/>
         <Keys idValue={"a"} keyValue={"A"} />
         <Keys idValue={"s"} keyValue={"S"} />
         <Keys idValue={"d"} keyValue={"D"} />
@@ -54,12 +64,12 @@ const Keyboard = () => {
         <Keys idValue={"l"} keyValue={"L"} />
         <Keys idValue={";"} keyValue={";"} />
         <Keys idValue={"'"} keyValue={"'"} />
-        <Keys idValue={"Enter"} keyValue={"enter"} type={"enter"}/>
+        <Keys idValue={"Enter"} keyValue={"enter"} type={"enter"} smallFont={true}/>
 
       </div>
 
       <div className={styles.thirdRow}>
-        <Keys idValue={"Shift"} keyValue={"shift"} type={"shift"}/>
+        <Keys idValue={"Shift"} keyValue={"shift"} type={"shift"} smallFont={true}/>
         <Keys idValue={"z"} keyValue={"Z"} />
         <Keys idValue={"x"} keyValue={"X"} />
         <Keys idValue={"c"} keyValue={"C"} />
@@ -70,7 +80,7 @@ const Keyboard = () => {
         <Keys idValue={","} keyValue={","} />
         <Keys idValue={"."} keyValue={"."} />
         <Keys idValue={"/"} keyValue={"/"} />
-        <Keys idValue={"Shift"} keyValue={"shift"} type={"rshift"}/>
+        <Keys idValue={"Shift"} keyValue={"shift"} type={"rshift"} smallFont={true}/>
       </div>
 
       <div className={styles.spacebar}>
@@ -78,6 +88,8 @@ const Keyboard = () => {
       </div>
 
     </div>
+
+    </motion.div>
 
   )
 

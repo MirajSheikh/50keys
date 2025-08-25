@@ -9,6 +9,7 @@
   margin: auto;
 
   height: max-content;
+  width: max-content;
 }
 
 .numRow, .firstRow, .secondRow, .thirdRow, .spacebar{
@@ -16,18 +17,22 @@
   gap: 10px;
 }
 
+.numRow{
+  /*transform: translateX(35px);*/
+}
+
 .firstRow{
-  transform: translateX(13px);
+  /*transform: translateX(45px);*/
 }
 
 .secondRow{
-  transform: translateX(25px);
+  /*transform: translateX(55px);*/
 }
 
 .thirdRow{
-  transform: translateX(-25px);
+  /*transform: translateX(0px);*/
 }
 
 .spacebar{
-  
+  /*transform: translateX(0px);*/
 }
