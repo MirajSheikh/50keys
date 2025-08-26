@@ -8,11 +8,14 @@
 
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 
   background-color: hsl(0, 0%, 20%);
+
 }
 
 .wordsBlock h2{
   font: 500 1.5rem "Google Sans Code", monospace;
   color: hsl(0, 0%, 50%);
 }
+

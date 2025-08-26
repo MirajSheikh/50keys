@@ -1,17 +1,1 @@
-miraj
-moin
-gousim
-words
-this
-is
-of
-at
-again
-below
-above
-after
-before
-between
-inside
-outside
-paralyze
+miraj moin gousim words this is of at again below above after before between inside outside paralyze

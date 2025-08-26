@@ -4,18 +4,19 @@ import Keyboard from "./keyboard"
 import axios from "axios"
 import KeyboardToggle from "./keyboardToggle"
 import { contexts } from "../App"
-import { AnimatePresence, press } from "framer-motion"
+import { AnimatePresence } from "framer-motion"
 
 const Home = () => {
 
   const { showKeyboard } = useContext(contexts)
 
-  const [words, setWords] = useState("")
-  const [caps, setCaps] = useState(false)
+  const [words, setWords] = useState([])
+
+  const [typedString, setTypedString] = useState([])
 
   async function getWords(){
-    const wordString = await axios.get("http://localhost:8080/words")
-    setWords(wordString.data)
+    const res = await axios.get("http://localhost:8080/words")
+    setWords(res.data)
   }
 
   useEffect(() => {
@@ -31,7 +32,8 @@ const Home = () => {
 
       const pressedKey = e.key
 
-      if(pressedKey !== "Control" && pressedKey !== "Meta" && pressedKey !== "Alt"){
+      if(pressedKey !== "CapsLock" && pressedKey !== "Control" && pressedKey !== "Meta" && pressedKey !== "Alt"){
+        registerTypedKey(pressedKey)
         const keyboardKey = document.getElementById(pressedKey)
 
         keyboardKey.style.backgroundColor = "hsl(45, 100%, 50%)"
@@ -52,7 +54,7 @@ const Home = () => {
       if(keyboard === null){return}
 
       const pressedKey = e.key
-      if(pressedKey !== "Control" && pressedKey !== "Meta" && pressedKey !== "Alt"){
+      if(pressedKey !== "CapsLock" && pressedKey !== "Control" && pressedKey !== "Meta" && pressedKey !== "Alt"){
         const keyboardKey = document.getElementById(pressedKey)
 
         keyboardKey.style.background = "transparent"
@@ -66,12 +68,27 @@ const Home = () => {
 
   }, [])
 
+  useEffect(() => {
+
+    console.log(typedString)
+
+  }, [typedString])
+
+  function registerTypedKey(key){
+    if(key !== "Backspace"){
+      setTypedString(ts => [...ts, key])
+    }
+    else{
+      setTypedString(ts => ts.filter((_, i) => i !== ts.length-1))
+    }
+  }
+
   return(
 
     <>
 
       <div className={styles.wordsBlock}>
-        <h2>{words}</h2>
+        {words.map((word, i) => <h2 key={i}>{word}&nbsp;</h2>)}
       </div>
 
       <AnimatePresence>
