@@ -1,21 +1,24 @@
-.wordsBlock{
+.wordsBlock, .typedWords{
   position: absolute;
-  inset: 0 0 15vh 0;
+  inset: 35vh 0 auto 0;
   margin: auto;
 
-  height: min-content;
   width: 70vw;
+  overflow-y: hidden;
 
   display: flex;
-  align-items: center;
+  align-items: start;
   flex-wrap: wrap;
 
-  background-color: hsl(0, 0%, 20%);
-
+  background: transparent;
 }
 
 .wordsBlock h2{
-  font: 500 1.5rem "Google Sans Code", monospace;
+  font: 500 30px "Google Sans Code", monospace;
   color: hsl(0, 0%, 50%);
 }
 
+.typedWords h2{
+  font: 500 30px "Google Sans Code", monospace;
+  color: white;
+}

@@ -8,11 +8,13 @@ export const contexts = createContext();
 function App() {
 
   const [showKeyboard, setShowKeyboard] = useState(true)
+  const [caps, setCaps] = useState(false)
+  const [shift, setShift] = useState(false)
 
   return (
     <>
 
-      <contexts.Provider value={{showKeyboard, setShowKeyboard}}>
+      <contexts.Provider value={{showKeyboard, setShowKeyboard, caps, setCaps, shift, setShift}}>
         <Navbar />
         <QuickSettings />
         <Home />

@@ -15,19 +15,10 @@ import java.util.List;
 public class MainController {
 
     @GetMapping("/words")
-    public List<String> getWords() throws IOException{
+    public String getWords() throws IOException{
         String filePath = "D:\\50keys\\backend\\50keys\\src\\main\\resources\\static\\words.txt";
         Path path = Path.of(filePath);
         System.out.println(Files.readString(path));
-        String str = Files.readString(path);
-        List<String> words = new ArrayList<>();
-        int begin = 0;
-        for(int i = 0; i < str.length(); i++){
-            if(str.charAt(i) == ' '){
-                words.add(str.substring(begin, i));
-                begin = i+1;
-            }
-        }
-        return words;
+        return Files.readString(path);
     }
 }

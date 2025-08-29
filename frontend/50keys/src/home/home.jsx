@@ -8,11 +8,11 @@ import { AnimatePresence } from "framer-motion"
 
 const Home = () => {
 
-  const { showKeyboard } = useContext(contexts)
+  const { showKeyboard, caps, setCaps, setShift } = useContext(contexts)
 
-  const [words, setWords] = useState([])
+  const [words, setWords] = useState(null)
 
-  const [typedString, setTypedString] = useState([])
+  const [typedLetters, setTypedLetters] = useState([])
 
   async function getWords(){
     const res = await axios.get("http://localhost:8080/words")
@@ -32,19 +32,50 @@ const Home = () => {
 
       const pressedKey = e.key
 
-      if(pressedKey !== "CapsLock" && pressedKey !== "Control" && pressedKey !== "Meta" && pressedKey !== "Alt"){
+      if(pressedKey !== "Shift" && 
+        pressedKey !== "CapsLock" && 
+        pressedKey !== "Control" && 
+        pressedKey !== "Meta" && 
+        pressedKey !== "Alt"){
         registerTypedKey(pressedKey)
         const keyboardKey = document.getElementById(pressedKey)
 
         keyboardKey.style.backgroundColor = "hsl(45, 100%, 50%)"
         keyboardKey.style.borderColor = "hsl(45, 100%, 50%)"
+        keyboardKey.style.color = "hsl(0, 0%, 20%)"
       }
+
+      else if(pressedKey === "CapsLock" && caps === false){
+        const keyboardKey = document.getElementById(pressedKey)
+
+        keyboardKey.style.backgroundColor = "hsl(45, 100%, 50%)"
+        keyboardKey.style.borderColor = "hsl(45, 100%, 50%)"
+        keyboardKey.style.color = "hsl(0, 0%, 20%)"
+        setCaps(c => !c)
+      }
+      else if(pressedKey === "CapsLock" && caps === true){
+        const keyboardKey = document.getElementById(pressedKey)
+
+        keyboardKey.style.background = "transparent"
+        keyboardKey.style.borderColor = "hsl(45, 100%, 30%)"
+        keyboardKey.style.color = "hsl(45, 100%, 30%)"
+        setCaps(c => !c)
+      }
+
+      if(pressedKey === "Shift"){
+        setShift(true)
+        const keyboardKey = document.getElementById(pressedKey)
+        keyboardKey.style.backgroundColor = "hsl(45, 100%, 50%)"
+        keyboardKey.style.borderColor = "hsl(45, 100%, 50%)"
+        keyboardKey.style.color = "hsl(0, 0%, 20%)"
+      }
+
     }
 
     document.addEventListener("keydown", handleKeyPress)
 
     return () => document.removeEventListener("keydown", handleKeyPress)
-  }, [])
+  }, [caps])
 
   useEffect(() => {
 
@@ -54,12 +85,26 @@ const Home = () => {
       if(keyboard === null){return}
 
       const pressedKey = e.key
-      if(pressedKey !== "CapsLock" && pressedKey !== "Control" && pressedKey !== "Meta" && pressedKey !== "Alt"){
+      if(pressedKey !== "Shift" && 
+        pressedKey !== "CapsLock" && 
+        pressedKey !== "Control" && 
+        pressedKey !== "Meta" && 
+        pressedKey !== "Alt"){
         const keyboardKey = document.getElementById(pressedKey)
 
         keyboardKey.style.background = "transparent"
         keyboardKey.style.borderColor = "hsl(45, 100%, 30%)"
+        keyboardKey.style.color = "hsl(45, 100%, 30%)"
       }
+
+      if(pressedKey === "Shift"){
+        setShift(false)
+        const keyboardKey = document.getElementById(pressedKey)
+        keyboardKey.style.background = "transparent"
+        keyboardKey.style.borderColor = "hsl(45, 100%, 30%)"
+        keyboardKey.style.color = "hsl(45, 100%, 30%)"
+      }
+
     }
 
     document.addEventListener("keyup", handleKeyRelease)
@@ -68,18 +113,12 @@ const Home = () => {
 
   }, [])
 
-  useEffect(() => {
-
-    console.log(typedString)
-
-  }, [typedString])
-
   function registerTypedKey(key){
     if(key !== "Backspace"){
-      setTypedString(ts => [...ts, key])
+      setTypedLetters(l => [...l, key])
     }
     else{
-      setTypedString(ts => ts.filter((_, i) => i !== ts.length-1))
+      setTypedLetters(l => l.slice(0, l.length-1))
     }
   }
 
@@ -88,7 +127,11 @@ const Home = () => {
     <>
 
       <div className={styles.wordsBlock}>
-        {words.map((word, i) => <h2 key={i}>{word}&nbsp;</h2>)}
+        <h2>{words}</h2>
+      </div>
+
+      <div className={styles.typedWords}>
+        {typedLetters.map((letter, i) => <h2 key={i}>{letter}</h2>)}
       </div>
 
       <AnimatePresence>
