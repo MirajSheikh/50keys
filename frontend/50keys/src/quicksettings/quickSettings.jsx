@@ -26,9 +26,13 @@ const QuickSettings = () => {
   function handleModeChange(e){
     if(e.target.id === "samay"){
       setCurrMode("selectTimes")
+      document.getElementById("samay").style.color = "hsl(0, 0%, 20%)"
+      document.getElementById("shabd").style.color = "hsl(0, 0%, 50%)"
     }
     if(e.target.id === "shabd"){
       setCurrMode("selectWords")
+      document.getElementById("shabd").style.color = "hsl(0, 0%, 20%)"
+      document.getElementById("samay").style.color = "hsl(0, 0%, 50%)"
     }
   }
 
@@ -38,10 +42,10 @@ const QuickSettings = () => {
 
       <div id="modeSelector" className={styles.modeSelector}>
         
-        <h2 id="samay" onClick={handleModeChange}>
+        <h2 id="samay" style={{color: "hsl(0, 0%, 50%)"}} onClick={handleModeChange}>
           Time
         </h2>
-        <h2 id="shabd" onClick={handleModeChange}>
+        <h2 id="shabd" style={{color: "hsl(0, 0%, 20%)"}} onClick={handleModeChange}>
           Words
         </h2>
         <div id="highlighter" className={styles.modeHighlighter}></div>

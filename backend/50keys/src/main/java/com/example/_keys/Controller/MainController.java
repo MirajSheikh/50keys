@@ -16,11 +16,13 @@ import java.util.List;
 public class MainController {
 
     @GetMapping("/selectWords/{wordCount}")
-    public List<List<Character>> getWords(@PathVariable String wordCount) throws IOException {
-        String filePath = "D:\\50keys\\backend\\50keys\\src\\main\\resources\\static\\words"+wordCount+".txt";
+    public List<List<Character>> getWords(@PathVariable int wordCount) throws IOException {
+        String filePath = "D:\\50keys\\backend\\50keys\\src\\main\\resources\\static\\words.txt";
         Path path = Path.of(filePath);
         String str = Files.readString(path);
         System.out.println(str);
+        double randomStart = Math.round(Math.random()*100);
+        System.out.println(randomStart);
         List<List<Character>> wordsList = new ArrayList<>();
         List<Character> word = new ArrayList<>();
         for(int i = 0; i < str.length(); i++){
@@ -33,6 +35,10 @@ public class MainController {
             }
         }
         wordsList.add(word);
-        return wordsList;
+        List<List<Character>> words = new ArrayList<>();
+        for(int i = (int) randomStart; i < (int) randomStart + wordCount; i++){
+            words.add(wordsList.get(i));
+        }
+        return words;
     }
 }

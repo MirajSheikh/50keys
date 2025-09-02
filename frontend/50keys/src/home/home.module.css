@@ -56,3 +56,26 @@
   font: 500 20px "Google Sans Code", monospace;
   color: hsl(0, 0%, 80%);
 }
+.results button{
+  z-index: 5;
+  position: absolute;
+  inset: 0 30vw 0 auto;
+  margin: auto;
+  height: 50px;
+  width: 100px;
+  font: 500 20px "Google Sans Code", monospace;
+  color: hsl(0, 0%, 80%);
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.1s ease, color 0.1s ease;
+}
+.results button:hover{
+  color: hsl(0, 0%, 20%);
+  background-color: hsl(45, 100%, 50%);
+}
+.results h3{
+  font: 500 15px "Google Sans Code", monospace;
+  color: hsl(0, 0%, 80%);
+}

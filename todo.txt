@@ -1,4 +1,4 @@
-Date -> 26-08-2025
+Date -> 03-09-2025
 
 PRIMARY FEATURES
 1. implement typing functionality
@@ -10,3 +10,7 @@ OPTIONAL FEATURES
 1. switchable themes
 2. more languages
 3. various difficulty settings
+
+current objective -->
+figure out how to display larger tests (like 100 words 150 words)
+get the time based tests to work

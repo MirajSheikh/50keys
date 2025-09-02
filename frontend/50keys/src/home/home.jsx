@@ -54,11 +54,12 @@ const Home = () => {
       const pressedKey = e.key
 
       if(pressedKey === " " && !test){
-        setTest(true)
+        restartTest()
         return
       }
 
-      if(pressedKey !== "Shift" && 
+      if(test && 
+        pressedKey !== "Shift" && 
         pressedKey !== "CapsLock" && 
         pressedKey !== "Control" && 
         pressedKey !== "Meta" && 
@@ -148,12 +149,12 @@ const Home = () => {
       return
     }
     if(key === "Backspace" && letterTracker > 0){
-      document.getElementById(`l${letterTracker-1}`).style.color = "hsl(0, 0%, 50%)"
+      document.getElementById(`l${letterTracker}`).style.color = "hsl(0, 0%, 50%)"
       if(document.getElementById(`l${letterTracker-1}`).style.color === "white"){
-        setCorrectCount(c => c--)
+        setCorrectCount(c => c-1)
       }
       else{
-        setWrongCount(w => w--)
+        setWrongCount(w => w-1)
       }
       document.getElementById(`l${letterTracker}`).style.textDecoration = "none"
       letterTracker--
@@ -208,7 +209,16 @@ const Home = () => {
   }
 
   function getAccuracy(){
+    console.log(correctCount)
+    console.log(charCount)
     return Math.round((correctCount/charCount)*100)
+  }
+
+  function restartTest(){
+    setTestComplete(false)
+    setTest(true)
+    setCorrectCount(0)
+    setWrongCount(0)
   }
 
   return(
@@ -252,7 +262,8 @@ const Home = () => {
           <h2>Time Taken : <span style={highlightedStats}>{`${getTimeTaken()}s`}</span></h2>
           <h2>Characters : {charCount}</h2>
           <h2>Word Count : {words.length}</h2>
-          <h2>Test : {currMode === "selectTimes" ? `Time ${timeOptions[setting]}` : `Words ${wordOptions[setting]}`}</h2>
+          <button onClick={restartTest}>Retry</button>
+          <h3>Press <span style={highlightedStats}>{`<SPACEBAR>`}</span> to Retry</h3>
         </div>
       </motion.div>}
       </AnimatePresence>
