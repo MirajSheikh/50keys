@@ -1,0 +1,12 @@
+.comingSoon{
+  position: absolute;
+  inset: 40vh 0 auto 0;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.comingSoon h2{
+  font: 500 30px "Google Sans Code", monospace;
+  color: hsl(45, 100%, 50%);
+}

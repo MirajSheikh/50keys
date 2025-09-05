@@ -5,7 +5,8 @@ import { contexts } from "../App"
 
 const QuickSettings = () => {
 
-  const { currMode, setCurrMode, setting, setSetting, timeOptions, wordOptions } = useContext(contexts)
+  const { currMode, setCurrMode, setting, setSetting, timeOptions, wordOptions, 
+    test, setTest, setTestComplete, getWords, setCorrectCount, setTypedCount } = useContext(contexts)
 
   useEffect(() => {
 
@@ -36,9 +37,46 @@ const QuickSettings = () => {
     }
   }
 
+  function handleSettingChange(){
+    setTest(false)
+    setTestComplete(false)
+    getWords(currMode, setting)
+  }
+
+  useEffect(() => {
+    handleSettingChange()
+  }, [currMode, setting])
+
+  function restartTest(){
+    setTestComplete(false)
+    setTest(false)
+    setCorrectCount(0)
+    setTypedCount(0)
+  }
+
+  function newTest(){
+    setTestComplete(false)
+    setTest(false)
+    setCorrectCount(0)
+    setTypedCount(0)
+    getWords(currMode, setting)
+  }
+
   return(
 
-    <div className={styles.quickSettings}>
+    <AnimatePresence mode="wait">
+
+      {test && <motion.div key="actionButtons" 
+        initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.1}}>
+      <div className={styles.testActionButtons}>
+        <button onClick={restartTest}>Retry</button>
+        <button onClick={newTest}>New Test</button>
+      </div></motion.div>}
+
+    {!test && <motion.div key="quickSettings" 
+        initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.1}}>
+        <div className={styles.quickSettings}>
+
 
       <div id="modeSelector" className={styles.modeSelector}>
         
@@ -90,7 +128,9 @@ const QuickSettings = () => {
         }
       </AnimatePresence>
 
-    </div>
+    </div></motion.div>}
+
+    </AnimatePresence>
 
   )
 

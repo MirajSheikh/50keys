@@ -1,38 +1,26 @@
 import { useContext, useEffect, useState } from "react"
 import styles from "./home.module.css"
 import Keyboard from "./keyboard"
-import axios from "axios"
 import KeyboardToggle from "./keyboardToggle"
 import { contexts } from "../App"
 import { AnimatePresence, motion } from "framer-motion"
+import ComingSoon from "../comingsoon/comingSoon"
 
 const Home = () => {
 
-  const { showKeyboard, caps, setCaps, setShift, setting, currMode, timeOptions, wordOptions } = useContext(contexts)
-
-  const [words, setWords] = useState([[]])
-
-  const [test, setTest] = useState(false)
-  const [testComplete, setTestComplete] = useState(false)
+  const { showKeyboard, caps, setCaps, setShift, setting, currMode, timeOptions, wordOptions, 
+    test, setTest, testComplete, setTestComplete, words, getWords, 
+    correctCount, setCorrectCount, typedCount, setTypedCount} = useContext(contexts)
 
   const [startTime, setStartTime] = useState(0)
   const [endTime, setEndTime] = useState(0)
   const [charCount, setCharCount] = useState(0)
-  const [correctCount, setCorrectCount] = useState(0)
-  const [wrongCount, setWrongCount] = useState(0)
   
-  async function getWords(currMode, setting){
-    const mode = currMode === "selectTimes" ? timeOptions : wordOptions
-    const res = await axios.get(`http://localhost:8080/${currMode}/${mode[setting]}`)
-    setWords(res.data)
-  }
-
   useEffect(() => {
     setTest(false)
     setTestComplete(false)
-    setWrongCount(0)
     setCorrectCount(0)
-    getWords(currMode, setting)
+    setTypedCount(0)
   }, [currMode, setting])
 
   useEffect(() => {
@@ -49,11 +37,12 @@ const Home = () => {
     function handleKeyPress(e){
 
       const keyboard = document.getElementById("keyboard")
-      if(keyboard === null){return}
 
       const pressedKey = e.key
 
-      if(pressedKey === " " && !test){
+      if(keyboard === null && pressedKey !== " " && !test){return}
+
+      if(pressedKey === " " && !test && currMode === "selectWords"){
         restartTest()
         return
       }
@@ -63,8 +52,11 @@ const Home = () => {
         pressedKey !== "CapsLock" && 
         pressedKey !== "Control" && 
         pressedKey !== "Meta" && 
-        pressedKey !== "Alt"){
+        pressedKey !== "Alt" && 
+        pressedKey !== "Tab" &&
+        pressedKey !== "Enter"){
         checkLetter(pressedKey)
+        if(keyboard === null)return
         const keyboardKey = document.getElementById(pressedKey)
 
         keyboardKey.style.backgroundColor = "hsl(45, 100%, 50%)"
@@ -73,6 +65,7 @@ const Home = () => {
       }
 
       else if(pressedKey === "CapsLock" && caps === false){
+        if(keyboard === null)return
         const keyboardKey = document.getElementById(pressedKey)
 
         keyboardKey.style.backgroundColor = "hsl(45, 100%, 50%)"
@@ -81,6 +74,7 @@ const Home = () => {
         setCaps(c => !c)
       }
       else if(pressedKey === "CapsLock" && caps === true){
+        if(keyboard === null)return
         const keyboardKey = document.getElementById(pressedKey)
 
         keyboardKey.style.background = "transparent"
@@ -91,6 +85,7 @@ const Home = () => {
 
       if(pressedKey === "Shift"){
         setShift(true)
+        if(keyboard === null)return
         const keyboardKey = document.getElementById(pressedKey)
         keyboardKey.style.backgroundColor = "hsl(45, 100%, 50%)"
         keyboardKey.style.borderColor = "hsl(45, 100%, 50%)"
@@ -102,7 +97,7 @@ const Home = () => {
     document.addEventListener("keydown", handleKeyPress)
 
     return () => document.removeEventListener("keydown", handleKeyPress)
-  }, [caps, test])
+  }, [caps, test, currMode])
 
   useEffect(() => {
 
@@ -116,7 +111,10 @@ const Home = () => {
         pressedKey !== "CapsLock" && 
         pressedKey !== "Control" && 
         pressedKey !== "Meta" && 
-        pressedKey !== "Alt"){
+        pressedKey !== "Alt" && 
+        pressedKey !== "Tab" &&
+        pressedKey !== "Enter"){
+        if(keyboard === null)return
         const keyboardKey = document.getElementById(pressedKey)
 
         keyboardKey.style.background = "transparent"
@@ -126,6 +124,7 @@ const Home = () => {
 
       if(pressedKey === "Shift"){
         setShift(false)
+        if(keyboard === null)return
         const keyboardKey = document.getElementById(pressedKey)
         keyboardKey.style.background = "transparent"
         keyboardKey.style.borderColor = "hsl(45, 100%, 30%)"
@@ -153,12 +152,10 @@ const Home = () => {
       if(document.getElementById(`l${letterTracker-1}`).style.color === "white"){
         setCorrectCount(c => c-1)
       }
-      else{
-        setWrongCount(w => w-1)
-      }
       document.getElementById(`l${letterTracker}`).style.textDecoration = "none"
       letterTracker--
       document.getElementById(`l${letterTracker}`).style.textDecoration = "underline"
+      document.getElementById(`l${letterTracker}`).style.color = "hsl(0, 0%, 50%)"
     }
     else{
       if(key === "Backspace"){
@@ -172,8 +169,8 @@ const Home = () => {
       }
       else{
         document.getElementById(`l${letterTracker}`).style.color = "hsl(0, 100%, 70%)"
-        setWrongCount(w => w+1)
       }
+      setTypedCount(t => t+1)
       document.getElementById(`l${letterTracker}`).style.textDecoration = "none"
       letterTracker++
       document.getElementById(`l${letterTracker}`).style.textDecoration = "underline"
@@ -209,16 +206,22 @@ const Home = () => {
   }
 
   function getAccuracy(){
-    console.log(correctCount)
-    console.log(charCount)
-    return Math.round((correctCount/charCount)*100)
+    return Math.round((correctCount/typedCount)*100)
   }
 
   function restartTest(){
     setTestComplete(false)
     setTest(true)
     setCorrectCount(0)
-    setWrongCount(0)
+    setTypedCount(0)
+  }
+
+  function newTest(){
+    setTestComplete(false)
+    setTest(false)
+    setCorrectCount(0)
+    setTypedCount(0)
+    getWords(currMode, setting)
   }
 
   return(
@@ -226,7 +229,7 @@ const Home = () => {
     <>
 
       <AnimatePresence mode="wait">
-      {!test && !testComplete && <motion.div key="startBox"
+      {!test && !testComplete && currMode !== "selectTimes" && <motion.div key="startBox"
         initial={{opacity: 0}} 
         animate={{opacity: 1}} 
         exit={{opacity: 0}} 
@@ -236,7 +239,15 @@ const Home = () => {
         </div>
       </motion.div>}
 
-      {test && <motion.div key="wordsBlock"
+        {currMode === "selectTimes" && <motion.div key="comingSoon"
+        initial={{opacity: 0}} 
+        animate={{opacity: 1}} 
+        exit={{opacity: 0}} 
+        transition={{duration: 0.1}}>
+          <ComingSoon />
+        </motion.div>}
+
+      {test && currMode !== "selectTimes" && <motion.div key="wordsBlock"
         initial={{opacity: 0}} 
         animate={{opacity: 1}} 
         exit={{opacity: 0}} 
@@ -262,7 +273,10 @@ const Home = () => {
           <h2>Time Taken : <span style={highlightedStats}>{`${getTimeTaken()}s`}</span></h2>
           <h2>Characters : {charCount}</h2>
           <h2>Word Count : {words.length}</h2>
-          <button onClick={restartTest}>Retry</button>
+            <div className={styles.resultButtons}>
+              <button onClick={restartTest}>Retry</button>
+              <button onClick={newTest}>New Test</button>
+            </div>
           <h3>Press <span style={highlightedStats}>{`<SPACEBAR>`}</span> to Retry</h3>
         </div>
       </motion.div>}

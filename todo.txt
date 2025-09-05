@@ -1,4 +1,4 @@
-Date -> 03-09-2025
+Date -> 05-09-2025
 
 PRIMARY FEATURES
 1. implement typing functionality
@@ -12,5 +12,8 @@ OPTIONAL FEATURES
 3. various difficulty settings
 
 current objective -->
+implement leaderboard and deploy the app
+
+future objectives -->
 figure out how to display larger tests (like 100 words 150 words)
 get the time based tests to work

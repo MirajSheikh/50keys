@@ -1,3 +1,31 @@
+.testActionButtons{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  position: absolute;
+  inset: auto 0 75vh 0;
+  margin: auto;
+}
+.testActionButtons button{
+  z-index: 5;
+  font: 500 20px "Google Sans Code", monospace;
+  color: hsl(45, 100%, 30%);
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background-color 0.1s ease, color 0.1s ease;
+}
+.testActionButtons button:hover{
+  color: hsl(0, 0%, 20%);
+  background-color: hsl(45, 100%, 50%);
+}
+.testActionButtons button:focus{
+  color: hsl(0, 0%, 20%);
+  background-color: hsl(45, 100%, 50%);
+  outline: none;
+}
 .quickSettings{
   position: absolute;
   inset: 0 0 60vh 0;
