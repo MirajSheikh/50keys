@@ -3,6 +3,9 @@ import Home from "./home/home";
 import Navbar from "./navbar/navbar";
 import QuickSettings from "./quicksettings/quickSettings";
 import axios from "axios";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Leaderboard from "./leaderboard/learderboard";
+import { AnimatePresence } from "framer-motion";
 
 export const contexts = createContext();
 
@@ -26,32 +29,36 @@ function App() {
   const [correctCount, setCorrectCount] = useState(0)
   const [typedCount, setTypedCount] = useState(0)
 
+  const [showLeaderboard, setShowLeaderboard] = useState(false)
+
   const timeOptions = ["coming soon..."]
   const wordOptions = [20]
 
   return (
-    <>
+    <contexts.Provider value={{
+      showKeyboard, setShowKeyboard, 
+      caps, setCaps, 
+      shift, setShift, 
+      currMode, setCurrMode, 
+      setting, setSetting, 
+      timeOptions, wordOptions,
+      test, setTest,
+      testComplete, setTestComplete,
+      words, setWords,
+      getWords,
+      correctCount, setCorrectCount,
+      typedCount, setTypedCount,
+      showLeaderboard, setShowLeaderboard
+    }}>
 
-      <contexts.Provider value={{
-        showKeyboard, setShowKeyboard, 
-        caps, setCaps, 
-        shift, setShift, 
-        currMode, setCurrMode, 
-        setting, setSetting, 
-        timeOptions, wordOptions,
-        test, setTest,
-        testComplete, setTestComplete,
-        words, setWords,
-        getWords,
-        correctCount, setCorrectCount,
-        typedCount, setTypedCount
-      }}>
-        <Navbar />
-        <QuickSettings />
-        <Home />
-      </contexts.Provider>
+      <Navbar />
+      <QuickSettings />
+      <Home />
+      <AnimatePresence>
+        {!test && showLeaderboard && <Leaderboard />}
+      </AnimatePresence>
 
-    </>
+    </contexts.Provider>
   )
 }
 

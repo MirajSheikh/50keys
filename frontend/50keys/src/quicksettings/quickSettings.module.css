@@ -7,9 +7,8 @@
   margin: auto;
 }
 .testActionButtons button{
-  z-index: 5;
   font: 500 20px "Google Sans Code", monospace;
-  color: hsl(45, 100%, 30%);
+  color: hsl(45, 100%, 50%);
   background: transparent;
   border: none;
   border-radius: 10px;

@@ -10,7 +10,7 @@ const Home = () => {
 
   const { showKeyboard, caps, setCaps, setShift, setting, currMode, timeOptions, wordOptions, 
     test, setTest, testComplete, setTestComplete, words, getWords, 
-    correctCount, setCorrectCount, typedCount, setTypedCount} = useContext(contexts)
+    correctCount, setCorrectCount, typedCount, setTypedCount, setShowLeaderboard} = useContext(contexts)
 
   const [startTime, setStartTime] = useState(0)
   const [endTime, setEndTime] = useState(0)
@@ -214,6 +214,7 @@ const Home = () => {
     setTest(true)
     setCorrectCount(0)
     setTypedCount(0)
+    setShowLeaderboard(false)
   }
 
   function newTest(){
@@ -221,6 +222,7 @@ const Home = () => {
     setTest(false)
     setCorrectCount(0)
     setTypedCount(0)
+    setShowLeaderboard(false)
     getWords(currMode, setting)
   }
 
