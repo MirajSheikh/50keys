@@ -3,18 +3,19 @@ import Home from "./home/home";
 import Navbar from "./navbar/navbar";
 import QuickSettings from "./quicksettings/quickSettings";
 import axios from "axios";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Leaderboard from "./leaderboard/learderboard";
 import { AnimatePresence } from "framer-motion";
 
 export const contexts = createContext();
+
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 function App() {
 
   async function getWords(currMode, setting){
     //use currMode when implementing Time based Tests
     const mode = wordOptions
-    const res = await axios.get(`http://localhost:8080/selectWords/${mode[setting]}`)
+    const res = await axios.get(`${API_BASE_URL}/selectWords/${mode[setting]}`)
     setWords(res.data)
   }
 
