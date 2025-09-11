@@ -1,5 +1,6 @@
 package com.example._keys.Controller;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +18,8 @@ public class MainController {
 
     @GetMapping("/selectWords/{wordCount}")
     public List<List<Character>> getWords(@PathVariable int wordCount) throws IOException {
-        String filePath = "D:\\50keys\\backend\\50keys\\src\\main\\resources\\static\\words.txt";
-        Path path = Path.of(filePath);
-        String str = Files.readString(path);
+        ClassPathResource path = new ClassPathResource("static/words.txt");
+        String str = new String(path.getInputStream().readAllBytes());
         System.out.println(str);
         double randomStart = Math.round(Math.random()*100);
         System.out.println(randomStart);
