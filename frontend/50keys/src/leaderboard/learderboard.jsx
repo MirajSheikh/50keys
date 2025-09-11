@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import styles from "./leaderboard.module.css"
 import { contexts } from "../App"
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 
 const Leaderboard = () => {
 
@@ -10,11 +10,11 @@ const Leaderboard = () => {
   const leaderboardRef = useRef(null)
 
   const [scores, setScores] = useState([
-    {rank: 1, name: "Miraj", speed: 100},
-    {rank: 2, name: "Moin", speed: 110},
+    {rank: 1, name: "Miraj", speed: 150},
+    {rank: 2, name: "Moin", speed: 140},
     {rank: 3, name: "Gousim", speed: 120},
-    {rank: 4, name: "Aman", speed: 150},
-    {rank: 5, name: "Abc", speed: 50},
+    {rank: 4, name: "Aman", speed: 110},
+    {rank: 5, name: "Max Verstappen", speed: 50},
   ])
 
   useEffect(() => {
